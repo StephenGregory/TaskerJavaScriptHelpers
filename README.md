@@ -1,6 +1,6 @@
 # Tasker-JavaScript-Helpers
 
-In some instances, it's much easier to accomplish things in [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm&hl=en) by using JavaScript.
+In some instances, it's much easier to accomplish things in [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm&hl=en) by [using JavaScript](http://tasker.dinglisch.net/userguide/en/javascript.html).
 
 Here you'll find my JavaScript helper functions:
 
