@@ -15,7 +15,7 @@ xhr.onload = function () {
   var releaseDate = new Date(releaseDateString);
   var wholeDaysUntilNextIssue = getDaysUntilDate(releaseDate);
   var issueCoverImageURL = generateIssueCoverURL(issueNumber);
-  
+
   setComicVariablesInTasker(issueCoverImageURL, issueNumber, wholeDaysUntilNextIssue, releaseDateString);
 
   //signal to Tasker that the code is completed
@@ -32,7 +32,7 @@ function getDaysUntilDate(date) {
   var millisecondsUntilNextIssue = date - new Date();
   var days = millisecondsUntilNextIssue/1000/60/60/24;
   var wholeDaysUntilNextIssue = Math.floor(days);
-  
+
   return wholeDaysUntilNextIssue;
 }
 
@@ -44,15 +44,15 @@ function generateIssueCoverURL(issueNo) {
 }
 
 function setComicVariablesInTasker(issueCoverImageURL, issueNumber, wholeDaysUntilNextIssue, releaseDateString) {
-  setLocalVariable('img',issueCoverImageURL);
-  setLocalVariable('issueno',issueNumber);
-  setLocalVariable('days',wholeDaysUntilNextIssue);
-  setLocalVariable('date',releaseDateString);
+  setLocalVariable('img', issueCoverImageURL);
+  setLocalVariable('issueno', issueNumber);
+  setLocalVariable('days', wholeDaysUntilNextIssue);
+  setLocalVariable('date', releaseDateString);
 }
 
 function setLocalVariable(name, value, debug) {
-    if (debug) {
-        flash('setting ' + name + ' to ' + value);
+  if (debug) {
+      flash('setting ' + name + ' to ' + value);
 	}
 	setLocal(name, value);
 };
