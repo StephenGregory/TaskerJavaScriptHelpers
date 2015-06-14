@@ -10,7 +10,7 @@ xhr.onload = function () {
   var availabilityText = doc.querySelector('div.vision-contentbox-content.tt-content-style-black > span').innerText;
   var dateStart = availabilityText.substr(availabilityText.indexOf(':') + 1).trim();
   var array = dateStart.split(' ');
-  var releaseDateString = array[0] + ' ' + array[1] + ' ' + array[2] + ' 09:00 GMT-0500';
+  var releaseDateString = getIssueDateString(array[0], array[1], array[2]);
 
   var releaseDate = new Date(releaseDateString);
   var wholeDaysUntilNextIssue = getDaysUntilDate(releaseDate);
@@ -23,6 +23,10 @@ xhr.onload = function () {
 };
 
 xhr.send();
+
+function getIssueDateString(month, day, year) {
+    return [month, day, year, '09:00 GMT-0500'].join(' ');
+}
 
 function getDaysUntilDate(date) {
   var millisecondsUntilNextIssue = date - new Date();
