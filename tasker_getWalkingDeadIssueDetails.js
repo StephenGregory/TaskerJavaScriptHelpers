@@ -40,7 +40,7 @@ function generateIssueCoverURL(issueNo) {
     if (issueNo.length === 1) {
 	    issueNo = '0' + issueNo;
 	}
-	return ['http://i1.wp.com/walkingdeadcomics.org/wp-images/gallery/standard/', issueNo, '.jpg'].join('')
+	return ['http://i1.wp.com/walkingdeadcomics.org/wp-images/gallery/standard/', issueNo, '.jpg'].join('');
 }
 
 function setComicVariablesInTasker(issueCoverImageURL, issueNumber, wholeDaysUntilNextIssue, releaseDateString) {
