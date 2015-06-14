@@ -12,3 +12,5 @@ Retrieves details about the next issue of the Walking Dead comic. It sets the fo
 - `issueno` - the issue number
 - `days` - the number of days until the issue
 - `date` - the date that the issue with be available (in GMT-0500 time zone)
+
+Do with that information what you will! For example, [you can use AutoNotification](http://imgur.com/a/ZPTwv#0) to notify you when there's a new issue coming out.
