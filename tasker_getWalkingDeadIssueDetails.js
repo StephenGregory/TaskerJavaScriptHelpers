@@ -18,8 +18,7 @@ xhr.onload = function () {
 
   setComicVariablesInTasker(issueCoverImageURL, issueNumber, wholeDaysUntilNextIssue, releaseDateString);
 
-  //signal to Tasker that the code is completed
-  exit();
+  Tasker.leaveJavaScriptlet();
 };
 
 xhr.send();
@@ -52,7 +51,19 @@ function setComicVariablesInTasker(issueCoverImageURL, issueNumber, wholeDaysUnt
 
 function setLocalVariable(name, value, debug) {
   if (debug) {
-      flash('setting ' + name + ' to ' + value);
+    Tasker.flash('setting ' + name + ' to ' + value);
 	}
-	setLocal(name, value);
+  Tasker.setLocalVariable(name, value);
+}
+
+var Tasker = {
+  flash: function(text) {
+    flash(text);
+  },
+  setLocalVariable: function(name, value) {
+    setLocal(name, value);
+  },
+  leaveJavaScriptlet: function() {
+    exit();
+  }
 };
