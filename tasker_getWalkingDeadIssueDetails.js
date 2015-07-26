@@ -11,16 +11,16 @@ var Tasker = {
 };
 
 var theNextIssueData = {
-    number: undefined,
-    releaseDate: undefined,
-    coverImage: undefined
+    number: null,
+    releaseDate: null,
+    coverImage: null
 };
 
 var theNextIssueDataRetriever = {
-    retrieveData: function(dataSource, dataSourceParser) {
+    retrieveData: function(dataSourceUrl, dataSourceParser) {
         var xhr = new XMLHttpRequest();
 
-        xhr.open('GET', dataSource, true);
+        xhr.open('GET', dataSourceUrl, true);
 
         var _this = this;
 
@@ -28,16 +28,19 @@ var theNextIssueDataRetriever = {
             var parser = new DOMParser();
             var doc = parser.parseFromString(this.responseText, 'text/html');
 
-            var parsedData = dataSourceParser(doc);
+            var parsedData = dataSource.parsePageForParameters(doc);
 
-            var wholeDaysUntilNextIssue = _this._getDaysUntilDate(releaseDate);
+            var wholeDaysUntilNextIssue = _this._getDaysUntilDate(parsedData.releaseDate);
 
-            _this._setComicVariablesInTasker(parsedData.coverImage, parsedData.number, wholeDaysUntilNextIssue, parsedData.releaseDate);
+            _this._setComicVariablesInTasker(parsedData.coverImage, parsedData.number, wholeDaysUntilNextIssue, _this._getDateString(parsedData.releaseDate));
 
             Tasker.leaveJavaScriptlet();
         };
 
         xhr.send();
+    },
+    _getDateString(date) {
+        return date.toLocaleDateString();
     },
     _getDaysUntilDate: function (date) {
         var millisecondsUntilNextIssue = date - new Date();
@@ -45,9 +48,9 @@ var theNextIssueDataRetriever = {
         var wholeDaysUntilNextIssue = Math.floor(days);
         return wholeDaysUntilNextIssue;
     },
-    _setComicVariablesInTasker: function (issueCoverImageURL, issueNumber, wholeDaysUntilNextIssue, releaseDateString) {
-        this._setLocalVariable('img', issueCoverImageURL);
-        this. _setLocalVariable('issueno', issueNumber);
+    _setComicVariablesInTasker: function (issueCoverImageUrl, issueNumber, wholeDaysUntilNextIssue, releaseDateString) {
+        this._setLocalVariable('img', issueCoverImageUrl);
+        this._setLocalVariable('issueno', issueNumber);
         this._setLocalVariable('days', wholeDaysUntilNextIssue);
         this._setLocalVariable('date', releaseDateString);
     },
@@ -59,30 +62,25 @@ var theNextIssueDataRetriever = {
     }
 };
 
-
 var dataSource = {
     source: 'https://imagecomics.com/comics/series/the-walking-dead',
     parsePageForParameters: function (document) {
-        var titleNode = document.getElementById('p-title');
+        var upcomingReleasesNode = document.querySelector('.upcoming_releases');
+
+        var titleNode = Array.prototype.filter.call(upcomingReleasesNode.querySelectorAll('a'), this._isNodeTheIssueTitleNode)[0];
         var issueNumber = titleNode.innerText.substr(titleNode.innerText.indexOf('#')+1);
-        var availabilityText = document.querySelector('div.vision-contentbox-content.tt-content-style-black > span').innerText;
-        var dateStart = availabilityText.substr(availabilityText.indexOf(':') + 1).trim();
-        var array = dateStart.split(' ');
-        var releaseDateString = _getIssueDateString(array[0], array[1], array[2]);
-        theNextIssueData.releaseDate = issueNumber;
-        theNextIssueData.releaseDate = new Date(releaseDateString);
-        theNextIssueData.coverImage = _generateIssueCoverURL(issueNumber);
+
+        var availabilityDateText = upcomingReleasesNode.querySelector('h4').innerText;
+
+        theNextIssueData.number = issueNumber;
+        theNextIssueData.releaseDate = new Date(availabilityDateText);
+        theNextIssueData.coverImage = 'https://imagecomics.com' +  upcomingReleasesNode.querySelector('img').getAttribute('src');
+
         return theNextIssueData;
     },
-    _generateIssueCoverURL: function (issueNo) {
-        if (issueNo.length === 1) {
-            issueNo = '0' + issueNo;
-        }
-        return ['http://i1.wp.com/walkingdeadcomics.org/wp-images/gallery/standard/', issueNo, '.jpg'].join('');
-    },
-    _getIssueDateString: function (month, day, year) {
-        return [month, day, year, '09:00 GMT-0500'].join(' ');
+    _isNodeTheIssueTitleNode(node) {
+        return node.textContent.indexOf("#") !== -1;
     }
 };
 
-theNextIssueDataRetriever.retrieveData(dataSource.source, dataSource.parsePageForParameters);
+theNextIssueDataRetriever.retrieveData(dataSource.source, dataSource);
