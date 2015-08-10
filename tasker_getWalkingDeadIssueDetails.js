@@ -83,10 +83,10 @@ var dataSource = {
         return theNextIssueData;
     },
     _isNodeTheIssueTitleNode: function (node) {
-        return node.textContent.indexOf("#") !== -1;
+        return node.textContent.indexOf('#') !== -1;
     },
     _getHigherResolutionImage: function (urlFragment) {
-        var marker = "https_";
+        var marker = 'https_';
         var startIndex = urlFragment.indexOf(marker);
 
         if (startIndex === -1) {
@@ -95,15 +95,15 @@ var dataSource = {
 
         var imageUrl = urlFragment.substr(startIndex);
 
-        var breadcrumbs = imageUrl.split("/");
+        var breadcrumbs = imageUrl.split('/');
 
         var imageFilename = breadcrumbs[breadcrumbs.length - 1];
 
-        var newImageFilename = imageFilename.replace(/_\d+_\d+\./, ".");
+        var newImageFilename = imageFilename.replace(/_\d+_\d+\./, '.');
 
         breadcrumbs[breadcrumbs.length - 1] = newImageFilename;
 
-        var highResolutionImageUrl = breadcrumbs.join("/").replace("_", "://");
+        var highResolutionImageUrl = breadcrumbs.join('/').replace('_', '://');
 
         return highResolutionImageUrl;
     }
