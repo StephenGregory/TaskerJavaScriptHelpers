@@ -42,7 +42,7 @@ var theNextIssueDataRetriever = {
 
         xhr.send();
     },
-    _getDateString(date) {
+    _getDateString: function(date) {
         return date.toLocaleDateString();
     },
     _getDaysUntilDate: function (date) {
