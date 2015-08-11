@@ -4,7 +4,9 @@ In some instances, it's much easier to accomplish things in [Tasker](https://pla
 
 Here you'll find my JavaScript helper functions:
 
-## The Walking Dead Next Issue
+## Helper functions
+
+### The Walking Dead Next Issue
 
 ![alt tag](https://imagecomics.com/images/made/images/remote/https_d138hkes00e90m.cloudfront.net/release_images/TWD143-2x3-300_200_308.jpg)
 
@@ -16,3 +18,10 @@ Retrieves details about the next issue of the Walking Dead comic. It sets the fo
 - `date` - the date that the issue with be available.
 
 Do with that information what you will! For example, [you can use AutoNotification](http://imgur.com/a/ZPTwv#0) to notify you when there's a new issue coming out.
+
+### Distribution
+
+Run the following commands to obtain the distribution versions of the helpers:
+    npm install
+    gulp
+
