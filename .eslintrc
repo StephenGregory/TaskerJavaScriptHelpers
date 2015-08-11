@@ -9,6 +9,7 @@
         "curly": 2,
         "eqeqeq": 2,
         "eol-last": 1,
+        "indent": [2, 4],
         "no-alert": 2,
         "no-console": 2,
         "no-debugger": 2,
@@ -16,7 +17,9 @@
         "no-multiple-empty-lines": [2, {"max": 1}],
         "no-undef": 2,
         "no-unneeded-ternary": 2,
+        "no-unused-vars": 2,
         "quotes": [2, "single"],
+        "semi": [2, "always"],
         "yoda": [2, "never"]
     }
 }
