@@ -31,7 +31,7 @@ var theNextIssueDataRetriever = {
             var parser = new DOMParser();
             var doc = parser.parseFromString(this.responseText, 'text/html');
 
-            var parsedData = dataSource.parsePageForParameters(doc);
+            var parsedData = dataSourceParser.parsePageForParameters(doc);
 
             var wholeDaysUntilNextIssue = _this._getDaysUntilDate(parsedData.releaseDate);
 
