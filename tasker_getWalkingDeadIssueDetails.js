@@ -66,24 +66,45 @@ var theNextIssueDataRetriever = {
 };
 
 var dataSource = {
-    source: 'https://imagecomics.com/comics/series/the-walking-dead',
+    source: 'https://imagecomics.com/comics/release-archive/series/the-walking-dead',
     parsePageForParameters: function (document) {
-        var upcomingReleasesNode = document.querySelector('.upcoming_releases');
+        var today = new Date();
+        var books = document.querySelectorAll('.book');
 
-        var titleNode = Array.prototype.filter.call(upcomingReleasesNode.querySelectorAll('a'), this._isNodeTheIssueTitleNode)[0];
-        var issueNumber = titleNode.innerText.substr(titleNode.innerText.indexOf('#') + 1);
+        var titleRegex = /^The Walking Dead\s#\d+$/i;
 
-        var availabilityDateText = upcomingReleasesNode.querySelector('h4').innerText;
-        var imageUrlPortion = upcomingReleasesNode.querySelector('img').getAttribute('src');
+        var nextIssueDetails = Array.prototype.reduce.call(books, function(previousValue, currentNode) {
+            var publishInfoNode = currentNode.querySelector('.book__text');
+
+            var publishDate = new Date(publishInfoNode.innerText.substr(publishInfoNode.innerText.indexOf(':') + 1));
+
+            if (publishDate < today || (previousValue.date && publishDate > previousValue.date)) {
+                return previousValue;
+            }
+
+            var titleNode = currentNode.querySelector('.book__headline a');
+            var title = titleNode.innerText.trim();
+
+            if (!titleRegex.test(title)) {
+                return previousValue;
+            }
+
+            return {
+                imageSource: currentNode.querySelector('img').getAttribute('src'),
+                date: publishDate,
+                title: title
+            };
+        }, {});
+
+        var issueNumber = nextIssueDetails.title.substr(nextIssueDetails.title.indexOf('#') + 1);
+
+        var imageUrlPortion = nextIssueDetails.imageSource;
 
         theNextIssueData.number = issueNumber;
-        theNextIssueData.releaseDate = new Date(availabilityDateText);
+        theNextIssueData.releaseDate = nextIssueDetails.date;
         theNextIssueData.coverImage = this._getHigherResolutionImage(imageUrlPortion) || 'https://imagecomics.com' + imageUrlPortion;
 
         return theNextIssueData;
-    },
-    _isNodeTheIssueTitleNode: function (node) {
-        return node.textContent.indexOf('#') !== -1;
     },
     _getHigherResolutionImage: function (urlFragment) {
         var marker = 'https_';
