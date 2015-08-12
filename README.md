@@ -24,16 +24,12 @@ Do with that information what you will! For example, [you can use AutoNotificati
 ### One-time steps
 First you need to install [Node.js](https://nodejs.org/download/).
 
-Then install gulp:
-
-    $ npm install --global gulp
-
 ### From a fresh clone or fetch of the repository
 
 Run the following commands to obtain the distribution versions of the helpers:
 
     $ npm install
-    $ gulp
+    $ npm run taskerfy
 
 That'll do a little wizardry and create Tasker friendly versons in `./dist`. Now put those helpers on your Android device.
 
