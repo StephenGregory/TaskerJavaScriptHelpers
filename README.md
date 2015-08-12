@@ -25,8 +25,9 @@ First you need to install [Node.js](https://nodejs.org/download/).
 
 Second, from a fresh clone, run the following commands to obtain the distribution versions of the helpers:
 
-    npm install
-    gulp
+    $ npm install --global gulp
+    $ npm install
+    $ gulp
 
 That'll do a little wizardry and create Tasker friendly versons in `./dist`. Now put those helpers on your Android device.
 
