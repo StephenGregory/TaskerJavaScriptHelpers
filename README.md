@@ -19,9 +19,15 @@ Retrieves details about the next issue of the Walking Dead comic. It sets the fo
 
 Do with that information what you will! For example, [you can use AutoNotification](http://imgur.com/a/ZPTwv#0) to notify you when there's a new issue coming out.
 
-### Distribution
+## How the heck do I use these things?!
 
-Run the following commands to obtain the distribution versions of the helpers:
+First you need to install [Node.js](https://nodejs.org/download/).
+
+Second, from a fresh clone, run the following commands to obtain the distribution versions of the helpers:
+
     npm install
     gulp
 
+That'll do a little wizardry and create Tasker friendly versons in `./dist`. Now put those helpers on your Android device.
+
+Within a Tasker task, create a _JavaScript action_ and point to any of the helpers! Then you may use the use the variables, defined above, any way you can think of!
