@@ -21,11 +21,17 @@ Do with that information what you will! For example, [you can use AutoNotificati
 
 ## How the heck do I use these things?!
 
+### One-time steps
 First you need to install [Node.js](https://nodejs.org/download/).
 
-Second, from a fresh clone, run the following commands to obtain the distribution versions of the helpers:
+Then install gulp:
 
     $ npm install --global gulp
+
+### From a fresh clone or fetch of the repository
+
+Run the following commands to obtain the distribution versions of the helpers:
+
     $ npm install
     $ gulp
 
