@@ -98,35 +98,16 @@ var dataSource = {
 
         var issueNumber = nextIssueDetails.title.substr(nextIssueDetails.title.indexOf('#') + 1);
 
-        var imageUrlPortion = nextIssueDetails.imageSource;
+        var imageUrl = nextIssueDetails.imageSource;
 
         theNextIssueData.number = issueNumber;
         theNextIssueData.releaseDate = nextIssueDetails.date;
-        theNextIssueData.coverImage = this._getHigherResolutionImage(imageUrlPortion) || 'https://imagecomics.com' + imageUrlPortion;
+        theNextIssueData.coverImage = this._getHigherResolutionImage(imageUrl);
 
         return theNextIssueData;
     },
-    _getHigherResolutionImage: function (urlFragment) {
-        var marker = 'https_';
-        var startIndex = urlFragment.indexOf(marker);
-
-        if (startIndex === -1) {
-            return null;
-        }
-
-        var imageUrl = urlFragment.substr(startIndex);
-
-        var breadcrumbs = imageUrl.split('/');
-
-        var imageFilename = breadcrumbs[breadcrumbs.length - 1];
-
-        var newImageFilename = imageFilename.replace(/_\d+_\d+\./, '.');
-
-        breadcrumbs[breadcrumbs.length - 1] = newImageFilename;
-
-        var highResolutionImageUrl = breadcrumbs.join('/').replace('_', '://');
-
-        return highResolutionImageUrl;
+    _getHigherResolutionImage: function (smallResolutionImageUrl) {
+        return smallResolutionImageUrl.replace('_small/', '');
     }
 };
 
