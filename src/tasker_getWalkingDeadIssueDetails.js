@@ -66,31 +66,31 @@ var theNextIssueDataRetriever = {
 };
 
 var dataSource = {
-    source: 'https://imagecomics.com/comics/release-archive/series/the-walking-dead',
+    source: 'https://imagecomics.com/comics/list/series/the-walking-dead-1/releases',
     parsePageForParameters: function (document) {
         var today = new Date();
-        var books = document.querySelectorAll('.book');
+        var books = document.querySelectorAll('.cell.u-mb1');
 
         var titleRegex = /^The Walking Dead\s#\d+$/i;
 
         var nextIssueDetails = Array.prototype.reduce.call(books, function(previousValue, currentNode) {
-            var publishInfoNode = currentNode.querySelector('.book__text');
+            var dateNode = currentNode.querySelector('.date');
+            var imageNode = currentNode.querySelector('img');
 
-            var publishDate = new Date(publishInfoNode.innerText.substr(publishInfoNode.innerText.indexOf(':') + 1));
+            var publishDate = new Date(dateNode.innerText);
 
             if (publishDate < today || (previousValue.date && publishDate > previousValue.date)) {
                 return previousValue;
             }
 
-            var titleNode = currentNode.querySelector('.book__headline a');
-            var title = titleNode.innerText.trim();
+            var title = imageNode.getAttribute('alt').trim();
 
             if (!titleRegex.test(title)) {
                 return previousValue;
             }
 
             return {
-                imageSource: currentNode.querySelector('img').getAttribute('src'),
+                imageSource: imageNode.getAttribute('src'),
                 date: publishDate,
                 title: title
             };
@@ -102,12 +102,9 @@ var dataSource = {
 
         theNextIssueData.number = issueNumber;
         theNextIssueData.releaseDate = nextIssueDetails.date;
-        theNextIssueData.coverImage = this._getHigherResolutionImage(imageUrl);
+        theNextIssueData.coverImage = imageUrl;
 
         return theNextIssueData;
-    },
-    _getHigherResolutionImage: function (smallResolutionImageUrl) {
-        return smallResolutionImageUrl.replace('_small/', '');
     }
 };
 
