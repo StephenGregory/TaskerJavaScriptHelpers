@@ -8,7 +8,7 @@ Here you'll find my JavaScript helper functions:
 
 ### The Walking Dead Next Issue
 
-![alt tag](https://imagecomics.com/images/made/images/remote/https_d138hkes00e90m.cloudfront.net/release_images/TWD143-2x3-300_200_308.jpg)
+![The Walking Dead Cover](https://vignette.wikia.nocookie.net/walkingdead/images/1/18/Twd100cover_adlard.jpg/revision/latest?cb=20120616020008)
 
 Retrieves details about the next issue of the Walking Dead comic. It sets the following local task variables:
 
