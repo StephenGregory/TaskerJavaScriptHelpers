@@ -1,8 +1,11 @@
 {
-
     "extends": "eslint:recommended",
     "env": {
-        "browser": true
+        "browser": true,
+        "node": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 6
     },
     "rules": {
         "camelcase": [2, {"properties": "always"}],
@@ -11,7 +14,7 @@
         "eol-last": 1,
         "indent": [2, 4],
         "no-alert": 2,
-        "no-console": 2,
+        "no-console": 0,
         "no-debugger": 2,
         "no-extra-semi": 1,
         "no-multiple-empty-lines": [2, {"max": 1}],
