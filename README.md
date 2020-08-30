@@ -6,6 +6,34 @@ Here you'll find my JavaScript helper functions:
 
 ## Helper functions
 
+### Sparkle Laundry Status
+
+![](https://mysparkle.ca/images/logos/mysparkle.png?vfix_903)
+
+If you live in an apartment building with Sparkle Laundry machines, [their website](https://mysparkle.ca/) gives a lot of information on what machines are in use and who used them last.
+
+#### Requirements
+
+Setup a task in Tasker to login, then request data from https://mysparkle.ca/machines.json.
+
+Before you call this helper, set the following local variables:
+
+- `allmachinesjson` - a JSON string of https://mysparkle.ca/machines.json
+- `address` - exact or partial address where the laundry machines are located
+- `cardnumber` - your laundry card number
+
+#### Output
+
+On completion, sets the following variables:
+- `dryer_availability` - how many dryers are unused (e.g. 8/11)
+- `washer_availability` - how many washers are unused
+- `done_machines` - of the machines you have recently used, a description of how many are complete
+- `in_progress_machines` - of the machines you have recently used, a description of the ones in progress
+- `washer_time_remaining_min` - of the washers you have recently used, the min time remaining
+- `washer_time_remaining_max` - of the washers you have recently used, the max time remaining
+- `dryer_time_remaining_min` - of the dryers you have recently used, the min time remaining
+- `dryer_time_remaining_max` - of the dryers you have recently used, the max time remaining
+
 ### The Walking Dead Next Issue
 
 ![The Walking Dead Cover](https://vignette.wikia.nocookie.net/walkingdead/images/1/18/Twd100cover_adlard.jpg/revision/latest?cb=20120616020008)
