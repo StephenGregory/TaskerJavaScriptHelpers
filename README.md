@@ -17,7 +17,8 @@ This repository gives you an environment that lets you:
 
 1. [Quick Start](#quick-start)
 2. [Motivation](#motivation)
-3. [Helper functions in this repository](helper-functions)
+3. [Tutorial: Creating a JavaScript helper and testing it in a sandbox](#creating-a-javaScript-helper-and-testing-it-in-a-sandbox-tutorial)
+4. [Helper functions in this repository](helper-functions)
     - [Sparkle Laundry Status](#sparkle-laundry-status)
     - [The Walking Dead Next Issue](#the-walking-dead-next-issue)
 
@@ -108,6 +109,10 @@ With both, I've discovered pain points:
 You can see how quickly testing on your computer becomes less convenient as well. So you may write code on your computer, then modify it to run on your Android device, only to discover you made a mistake. This is tedious and inefficient.
 
 This repository aims to address all of these frustrations to get you up and running faster.
+
+## Creating a JavaScript helper and testing it in a sandbox tutorial
+
+See [this tutorial](docs/tutorial-pokemon.md).
 
 ## Helper functions
 
