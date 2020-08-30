@@ -1,8 +1,14 @@
 {
   "devDependencies": {
+    "browserify": "^16.5.2",
+    "event-stream": "^4.0.1",
+    "glob": "^7.1.6",
     "gulp": "4.x",
     "gulp-eslint": "6.x",
-    "gulp-strip-comments": "2.x"
+    "gulp-strip-comments": "2.x",
+    "gulp-strip-debug": "^3.0.0",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
   },
   "scripts": {
     "taskerfy": "gulp"

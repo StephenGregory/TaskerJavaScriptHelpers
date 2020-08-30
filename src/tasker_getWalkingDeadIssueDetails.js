@@ -1,17 +1,4 @@
-var Tasker = {
-    flashVariable: function (text) {
-        /*global flash*/
-        flash(text);
-    },
-    setLocalVariable: function (name, value) {
-        /*global setLocal*/
-        setLocal(name, value);
-    },
-    leaveJavaScriptlet: function () {
-        /*global exit*/
-        exit();
-    }
-};
+const Tasker = require('./lib/Tasker');
 
 var theNextIssueData = {
     number: null,
