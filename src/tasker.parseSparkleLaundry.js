@@ -37,6 +37,28 @@ function getMachines(machines, estimatedTimeToComplete, cardNumber) {
         .sort((a, b) => b.usedMinutesAgo - a.usedMinutesAgo);
 }
 
+/**
+* Get the number of available machines, allowing some time for someone to have removed their laundry
+* after the cycle has completed.
+* @param {Object} machines - The variable to retrieve (with or without the % prefix)
+* @param {Number} estimatedTimeToComplete - An estimation of how long it takes for a cycle to complete
+* @param {Number} minutesItTakesToChangeOverLaundry - An estimation of how long it takes to retrieve
+ *                                                    laundry after the cycle is complete
+* @return {Number} - number of available machines
+*/
+function getNumberOfAvailableMachines(machines, estimatedTimeToComplete, minutesItTakesToChangeOverLaundry) {
+    const now = new Date();
+    return machines
+        .filter(machine => {
+            const lastUsedDate = new Date(machine.last_used_at);
+            const minutesSinceLastUsed = differenceInMinutes(now, lastUsedDate);
+            const estimatedMinutesRemaining = (estimatedTimeToComplete - minutesSinceLastUsed);
+            const timeRemainingUntilChangedOver = estimatedMinutesRemaining + minutesItTakesToChangeOverLaundry;
+            return machine.display_status.toLowerCase() === 'available' && timeRemainingUntilChangedOver <= 0;
+        })
+        .length;
+}
+
 function formatInProgressMachine(machine) {
     return `${machine.number} has ${machine.minutesRemaining} minutes left (started ${machine.usedMinutesAgoFormat} ago) [${machine.status}]`;
 }
@@ -57,21 +79,22 @@ function formatMachines(machines, formatFunction, joiner) {
     return machines.map(machine => formatFunction(machine)).join(joiner);
 }
 
-function parseData(allMachines, streetAddress, cardNumber) {
+function parseData(allMachines, streetAddress, cardNumber, availabilityWaitTimeMins) {
     const matchingBuildings = allMachines.display_locations.filter(location => location.location_address.includes(streetAddress));
     if (matchingBuildings.length !== 1) {
         return Tasker.leaveJavaScriptlet();
     }
 
-    const ourBuilding = matchingBuildings[0];
-
-    const dryerAvailability = `Dryers: ${ourBuilding.availableDryers}/${ourBuilding.allDryers.length}`;
-    const washerAvailability = `Washers: ${ourBuilding.availableWashers}/${ourBuilding.allWashers.length}`;
-
-    const estimatedMinutes = {
+    const estimatedMinutes = Object.freeze({
         dryer: 45,
         washer: 35
-    };
+    });
+
+    const ourBuilding = matchingBuildings[0];
+    const availableDryers = getNumberOfAvailableMachines(ourBuilding.allDryers, estimatedMinutes.washer, availabilityWaitTimeMins);
+    const availableWashers = getNumberOfAvailableMachines(ourBuilding.allWashers, estimatedMinutes.dryer, availabilityWaitTimeMins);
+    const dryerAvailability = `Dryers: ${availableDryers}/${ourBuilding.allDryers.length}`;
+    const washerAvailability = `Washers: ${availableWashers}/${ourBuilding.allWashers.length}`;
 
     const washersUsedByMe = getMachines(ourBuilding.allWashers, estimatedMinutes.washer, cardNumber);
     const dryersUsedByMe = getMachines(ourBuilding.allDryers, estimatedMinutes.dryer, cardNumber);
@@ -97,6 +120,7 @@ function parseData(allMachines, streetAddress, cardNumber) {
 const allMachines = JSON.parse(allmachinesjson);
 const streetAddress = address;
 const cardNumber = parseInt(cardnumber);
+const availabilityWaitTimeMins = parseInt(availability_wait_time_mins);
 /* eslint-enable no-undef */
 
-parseData(allMachines, streetAddress, cardNumber);
+parseData(allMachines, streetAddress, cardNumber, availabilityWaitTimeMins);

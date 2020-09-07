@@ -21,6 +21,7 @@ Before you call this helper, set the following local variables:
 - `allmachinesjson` - a JSON string of https://mysparkle.ca/machines.json
 - `address` - exact or partial address where the laundry machines are located
 - `cardnumber` - your laundry card number
+- `availability_wait_time_mins` - estimated time, in minutes, it takes for someone to retrieve their laundry after the cycle is done
 
 #### Output
 
