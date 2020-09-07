@@ -2,6 +2,7 @@ const strip = require('gulp-strip-comments');
 const eslint = require('gulp-eslint');
 const stripDebug = require('gulp-strip-debug');
 const { src, dest, series } = require('gulp');
+const flatten = require('gulp-flatten');
 const source = require('vinyl-source-stream');
 const browserify = require('browserify');
 const glob = require('glob');
@@ -27,6 +28,7 @@ function taskerfy(done) {
                 .pipe(buffer())
                 .pipe(strip({ line: true }))
                 .pipe(stripDebug())
+                .pipe(flatten())
                 .pipe(dest('dist'));
         });
         eventStream.merge(tasks).on('end', done);
