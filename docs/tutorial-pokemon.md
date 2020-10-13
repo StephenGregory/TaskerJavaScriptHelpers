@@ -195,7 +195,7 @@ Next, copy your script onto your Android device and start using it:
 
 9. Run your task:
 
-  ![](assets/tutorial-pokemon/8.png)
+    ![](assets/tutorial-pokemon/8.png)
 
 It worked on the first try! See how easy that was?
 
