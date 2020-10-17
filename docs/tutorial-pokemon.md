@@ -138,7 +138,7 @@ extractPokemonInformation(pokemonDetails, useShinyImage);
 
 ## 3. Test your script and iterate until it is ready
 
-If you did Step 1 and created a sandbox, you can now run `node sandbox/sandbox.tasker.pokemonInfoHelper.js`.
+If you did [Step 1](#1-create-a-sandbox-to-test-your-script) and created a sandbox, you can now run `node sandbox/sandbox.tasker.pokemonInfoHelper.js`.
 
 You'll see something like:
 ```
