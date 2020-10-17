@@ -106,7 +106,7 @@ function getTypesLabel(types) {
     if (!types) {
         return '';
     }
-    types.map(typeInfo => typeInfo.type.name).join(', ');
+    return types.map(typeInfo => typeInfo.type.name).join(', ');
 }
 
 function getImage(sprites, useShiny) {
